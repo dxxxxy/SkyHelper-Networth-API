@@ -14,7 +14,8 @@
     "dependencies": {
         "@scalar/express-api-reference": "^0.9.19",
         "express": "^5.2.1",
-        "helmet": "^8.1.0",
+        "helmet": "^8.2.0",
+        "iplim": "^1.5.1",
         "skyhelper-networth": "^2.7.2",
         "tsoa": "^7.0.0-alpha.0"
     },
