@@ -1,35 +1,39 @@
 import { apiReference } from "@scalar/express-api-reference"
 import express from "express"
 import helmet from "helmet"
-import v1routes from "./routes/v1/index.js"
-import swagger from "swagger-ui-express"
-import swaggerDocument from "./public/openapi.json" with { type: "json" }
+import path from "path"
+import { fileURLToPath } from "url"
+import { RegisterRoutes } from "./routes.js"
 
 const app = express()
 const port = process.env.PORT || 3000
 
-//configuration
-app.use(express.json()) //json parsing
-app.use(express.static("public")) //static files
-// app.use(helmet({
-//     contentSecurityPolicy: {
-//         directives: {
-//             //keep default helmet settings but allow jsdelivr
-//             ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-//             "script-src": ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
-//         },
-//     },
-// })) //security
-app.use(
-    '/reference',
-    apiReference({
-        // Put your OpenAPI url here:
-        url: '/openapi.json',
-    }),
-)
-app.set("trust proxy", true) //nginx ip forwarding
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-//routes
-app.use("/v1", v1routes)
+//configuration
+app.use(express.static(path.join(__dirname, "public"))) //serve static
+app.use(express.json()) //json parsing
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+            "script-src": ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"]
+        }
+    }
+})) //security
+
+//routes - tsoa
+RegisterRoutes(app)
+
+//openapi documentation
+app.use(
+    "/",
+    apiReference({
+        url: "/openapi.json"
+    })
+)
+
+app.set("trust proxy", true) //nginx ip forwarding
 
 app.listen(port, () => console.log(`Listening to http://localhost:${port}`))
