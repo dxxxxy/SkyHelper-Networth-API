@@ -1,0 +1,216 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SkyHelper Networth API",
+        "description": "API for calculating networth of profiles and items for Hypixel SkyBlock using the skyhelper-networth package.",
+        "version": "1.0.0",
+        "contact": {
+            "name": "dxxxxy"
+        },
+        "license": {
+            "name": "GPL-3.0"
+        }
+    },
+    "tags": [
+        {
+            "name": "Networth",
+            "description": "Endpoints to calculate in-game networth"
+        }
+    ],
+    "paths": {
+        "/profile": {
+            "post": {
+                "tags": [
+                    "Networth"
+                ],
+                "summary": "Calculate Profile Networth",
+                "description": "Calculates the networth and non-cosmetic networth for a given SkyBlock profile, including museum and bank data.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profile": {
+                                        "type": "object"
+                                    },
+                                    "museum": {
+                                        "type": "object"
+                                    },
+                                    "bankBalance": {
+                                        "type": "number"
+                                    },
+                                    "options": {
+                                        "$ref": "#/components/schemas/NetworthOptions"
+                                    }
+                                },
+                                "required": [
+                                    "profile"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully calculated networth",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NetworthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred while calculating networth",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/item": {
+            "post": {
+                "tags": [
+                    "Networth"
+                ],
+                "summary": "Calculate Item Networth",
+                "description": "Calculates the networth and non-cosmetic networth for a targeted SkyBlock item.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "item": {
+                                        "type": "object"
+                                    },
+                                    "options": {
+                                        "$ref": "#/components/schemas/NetworthOptions"
+                                    }
+                                },
+                                "required": [
+                                    "item"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully calculated item networth",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NetworthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred while calculating networth",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "NetworthOptions": {
+                "type": "object",
+                "properties": {
+                    "prices": {
+                        "type": "object"
+                    },
+                    "cachePrices": {
+                        "type": "boolean"
+                    },
+                    "pricesRetries": {
+                        "type": "integer"
+                    },
+                    "onlyNetworth": {
+                        "type": "boolean"
+                    },
+                    "includeItemData": {
+                        "type": "boolean"
+                    },
+                    "sortItems": {
+                        "type": "boolean"
+                    },
+                    "stackItems": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "NetworthResult": {
+                "type": "object",
+                "properties": {
+                    "networth": {
+                        "type": "number"
+                    },
+                    "unsoulboundNetworth": {
+                        "type": "number"
+                    },
+                    "noInventory": {
+                        "type": "boolean"
+                    },
+                    "isNonCosmetic": {
+                        "type": "boolean"
+                    },
+                    "purse": {
+                        "type": "number"
+                    },
+                    "bank": {
+                        "type": "number"
+                    },
+                    "personalBank": {
+                        "type": "number"
+                    },
+                    "types": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "NetworthResponse": {
+                "type": "object",
+                "properties": {
+                    "networth": {
+                        "$ref": "#/components/schemas/NetworthResult"
+                    },
+                    "nonCosmeticNetworth": {
+                        "$ref": "#/components/schemas/NetworthResult"
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    },
+                    "trace": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
