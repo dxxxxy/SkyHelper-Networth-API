@@ -130,7 +130,7 @@
 							"$ref": "#/components/schemas/Item"
 						},
 						"type": "array",
-						"description": "The items in the inventory\r\nOnly included if the onlyNetworth option is false."
+						"description": "The items in the inventory\nOnly included if the onlyNetworth option is false."
 					},
 					"unsoulboundTotal": {
 						"type": "number",
@@ -204,6 +204,12 @@
 					},
 					"quiver": {
 						"$ref": "#/components/schemas/Inventory"
+					},
+					"farming_toolkit": {
+						"$ref": "#/components/schemas/Inventory"
+					},
+					"hunting_toolkit": {
+						"$ref": "#/components/schemas/Inventory"
 					}
 				},
 				"required": [
@@ -224,7 +230,9 @@
 					"sacks",
 					"essence",
 					"pets",
-					"quiver"
+					"quiver",
+					"farming_toolkit",
+					"hunting_toolkit"
 				],
 				"type": "object",
 				"description": "Construct a type with a set of properties K of type T"
