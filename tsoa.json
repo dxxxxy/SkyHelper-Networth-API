@@ -8,7 +8,7 @@
         "specVersion": 3,
         "info": {
             "title": "SkyHelper Networth API",
-            "description": "API for calculating networth of profiles and items for Hypixel SkyBlock using the skyhelper-networth package.",
+            "description": "An API wrapper for Altpapier/SkyHelper-Networth with playground and detailed documentation built for interoperability when developing networth-querying programs in runtimes other than Node.",
             "version": "1.0.0",
             "contact": {
                 "name": "dxxxxy"

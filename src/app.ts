@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(iplim({ timeout: 1000 * 60, limit: 60, window: 1000 * 60, exclude: ["/"] }))
 
 //use json parser
-app.use(express.json())
+app.use(express.json({ limit: "3mb" }))
 
 //use security middleware
 app.use(helmet({
@@ -35,7 +35,7 @@ app.use(helmet({
 //init tsoa
 RegisterRoutes(app)
 
-//handle tsoa validation errors
+//handle validation errors
 app.use(function errorHandler(
     err: unknown,
     _req: ExRequest,
@@ -51,11 +51,13 @@ app.use(function errorHandler(
     next()
 })
 
-//serve openapi documentation
-app.use(
-    "/",
+//serve documentation
+app.use("/",
     apiReference({
-        url: "/openapi.json"
+        url: "/openapi.json",
+        pageTitle: "SkyHelper-Networth-API",
+        hideClientButton: true,
+        favicon: "/favicon.png"
     })
 )
 
