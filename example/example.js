@@ -1,7 +1,10 @@
 let profileData, museumData, profileRes, museumRes
 
+// noinspection JSUnresolvedReference
+const API_KEY = process.env.API_KEY
+
 try {
-    const profileReq = await fetch(`https://api.hypixel.net/v2/skyblock/profile?key=9778ebe0-74a6-4223-8261-d0aa96e95c3d&profile=d3df3ccc-ffd3-473f-bbba-311d5329bd25`)
+    const profileReq = await fetch(`https://api.hypixel.net/v2/skyblock/profile?key=${API_KEY}&profile=d3df3ccc-ffd3-473f-bbba-311d5329bd25`)
     profileRes = await profileReq.json()
     profileData = profileRes.profile.members["28667672039044989b0019b14a2c34d6"]
 } catch (error) {
@@ -10,7 +13,7 @@ try {
 }
 
 try {
-    const museumReq = await fetch(`https://api.hypixel.net/v2/skyblock/museum?key=9778ebe0-74a6-4223-8261-d0aa96e95c3d&profile=d3df3ccc-ffd3-473f-bbba-311d5329bd25`)
+    const museumReq = await fetch(`https://api.hypixel.net/v2/skyblock/museum?key=${API_KEY}&profile=d3df3ccc-ffd3-473f-bbba-311d5329bd25`)
     museumRes = await museumReq.json()
     museumData = museumRes.members["28667672039044989b0019b14a2c34d6"]
 } catch (error) {
